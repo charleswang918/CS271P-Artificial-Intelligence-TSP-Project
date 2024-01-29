@@ -169,3 +169,21 @@ end_time = time.time()
 execution_time = end_time - start_time
 print(f"Execution time: {execution_time} seconds")
 
+# Expanded range of values for initial temperatures and cooling rates
+expanded_initial_temperatures = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+expanded_cooling_rates = [0.99, 0.98, 0.97, 0.96, 0.95, 0.94, 0.93, 0.92, 0.91, 0.90]
+
+# Running expanded experiments
+expanded_results = []
+for initial_temperature in expanded_initial_temperatures:
+    for cooling_rate in expanded_cooling_rates:
+        start_time = time.time()
+        initial_solution = random_dfs_tsp(tsp_matrix, 0)
+        sa_solution, sa_cost = simulated_annealing(tsp_matrix, initial_solution, initial_temperature, cooling_rate)
+        end_time = time.time()
+        execution_time = end_time - start_time
+        expanded_results.append((initial_temperature, cooling_rate, sa_cost, execution_time))
+
+# Find the best performance among expanded results
+best_expanded_performance = min(expanded_results, key=lambda x: x[2])  # Minimize cost
+print(best_expanded_performance)
